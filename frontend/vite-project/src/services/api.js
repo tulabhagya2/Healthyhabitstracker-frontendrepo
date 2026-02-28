@@ -1,5 +1,5 @@
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5555";
+  import.meta.env.VITE_API_BASE_URL || "https://healthy-habits-tracker-backend-repo.onrender.com/";
 
 /* =========================================
    TOKEN + HEADERS
