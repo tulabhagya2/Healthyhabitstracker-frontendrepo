@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  base: './', // important for production deployment
+  base: '/', // use absolute path for Vercel
   plugins: [react(), tailwindcss()],
   optimizeDeps: {
     exclude: ['lucide-react'],
