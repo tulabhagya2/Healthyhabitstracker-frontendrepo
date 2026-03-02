@@ -6,7 +6,7 @@ import { Signup } from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import { Habits } from './pages/Habits';
 import { Goals } from './pages/Goals';
-import { Activities } from './pages/Activities';
+
 import { Analytics } from './pages/Analytics';
 import { Navbar } from './components/navbar/Navbar';
 import { authAPI } from './services/api';
@@ -88,16 +88,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/activities"
-            element={
-              <ProtectedRoute>
-                <AppLayout>
-                  <Activities />
-                </AppLayout>
-              </ProtectedRoute>
-            }
-          />
+          
+        
           <Route
             path="/analytics"
             element={

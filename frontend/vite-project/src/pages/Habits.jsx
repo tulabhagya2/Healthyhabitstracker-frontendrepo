@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { HabitCard } from '../components/cards/HabitCard';
 import { HabitForm } from '../components/forms/HabitForm';
 import { Button } from '../components/ui/Button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/Dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '../components/ui/Dialog';
 import { habitAPI } from '../services/api';
 import { toast } from 'react-toastify';
 
@@ -11,6 +11,7 @@ export function Habits() {
   const [habits, setHabits] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedHabit, setSelectedHabit] = useState(null); // for updating habit
 
   useEffect(() => {
     fetchHabits();
@@ -37,8 +38,24 @@ export function Habits() {
     }
   };
 
+  const handleDelete = async (habitId) => {
+    try {
+      await habitAPI.delete(habitId);
+      toast.success('Habit deleted successfully');
+      fetchHabits();
+    } catch (error) {
+      toast.error(error.message || 'Failed to delete habit');
+    }
+  };
+
+  const handleUpdate = (habit) => {
+    setSelectedHabit(habit); // set habit data
+    setIsDialogOpen(true);
+  };
+
   const handleSuccess = () => {
     setIsDialogOpen(false);
+    setSelectedHabit(null);
     fetchHabits();
   };
 
@@ -57,18 +74,30 @@ export function Habits() {
           <h1 className="text-3xl font-bold">Habits</h1>
           <p className="text-muted-foreground mt-1">Track and manage your daily habits</p>
         </div>
+
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Add Habit
+              {selectedHabit ? 'Update Habit' : 'Add Habit'}
             </Button>
           </DialogTrigger>
+
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Create New Habit</DialogTitle>
+              <DialogTitle>{selectedHabit ? 'Update Habit' : 'Create New Habit'}</DialogTitle>
+              <DialogDescription>
+                {selectedHabit
+                  ? 'Edit the details of your habit and save changes.'
+                  : 'Fill in the form below to add a new habit.'}
+              </DialogDescription>
             </DialogHeader>
-            <HabitForm onSuccess={handleSuccess} onCancel={() => setIsDialogOpen(false)} />
+
+            <HabitForm
+              habit={selectedHabit} // pass habit for pre-filled form
+              onSuccess={handleSuccess}
+              onCancel={() => { setIsDialogOpen(false); setSelectedHabit(null); }}
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -80,7 +109,13 @@ export function Habits() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           {habits.map((habit) => (
-            <HabitCard key={habit.id} habit={habit} onComplete={handleComplete} />
+            <HabitCard
+              key={habit.id}
+              habit={habit}
+              onComplete={handleComplete}
+              onDelete={handleDelete}
+              onUpdate={handleUpdate}
+            />
           ))}
         </div>
       )}

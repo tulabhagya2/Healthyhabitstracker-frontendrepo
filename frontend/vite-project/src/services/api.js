@@ -1,7 +1,7 @@
 
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL 
+  "https://healthy-habits-tracker-backend-repo.onrender.com"
 
 /* =========================================
   
@@ -82,42 +82,61 @@ export const authAPI = {
    HABIT API
 ========================================= */
 
-export const habitAPI = {
+      export const habitAPI = { 
+  
   add: async (habitData) => {
     const response = await fetch(`${API_BASE_URL}/habits/add`, {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify(habitData),
     });
-
     return handleResponse(response);
   },
 
+  // Get all habits
   getAll: async () => {
     const response = await fetch(`${API_BASE_URL}/habits`, {
       headers: getHeaders(),
     });
-
     return handleResponse(response);
   },
 
+  // Mark a habit as completed (updates streak)
   complete: async (habitId) => {
-    const response = await fetch(
-      `${API_BASE_URL}/habits/${habitId}/complete`,
-      {
-        method: "PUT",
-        headers: getHeaders(),
-      }
-    );
-
-    return handleResponse(response);
-  },
-
-  getSummary: async () => {
-    const response = await fetch(`${API_BASE_URL}/habits/summary`, {
+    const response = await fetch(`${API_BASE_URL}/habits/${habitId}/complete`, {
+      method: "PUT",
       headers: getHeaders(),
     });
+    return handleResponse(response);
+  },
 
+  // Get dashboard summary (daily/weekly habits)
+  getSummary: async (category = "all") => {
+    // Pass category as query param for filtering if needed
+    const url =
+      category === "all"
+        ? `${API_BASE_URL}/habits/summary`
+        : `${API_BASE_URL}/habits/summary?category=${category}`;
+    const response = await fetch(url, { headers: getHeaders() });
+    return handleResponse(response);
+  },
+
+  // Update a habit
+  update: async (habitId, habitData) => {
+    const response = await fetch(`${API_BASE_URL}/habits/${habitId}`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify(habitData),
+    });
+    return handleResponse(response);
+  },
+
+  // Delete a habit
+  delete: async (habitId) => {
+    const response = await fetch(`${API_BASE_URL}/habits/${habitId}`, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
     return handleResponse(response);
   },
 };
@@ -127,37 +146,65 @@ export const habitAPI = {
 ========================================= */
 
 export const goalAPI = {
+  // Create a new goal
   add: async (goalData) => {
     const response = await fetch(`${API_BASE_URL}/goals/add`, {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify(goalData),
     });
-
     return handleResponse(response);
   },
 
+  // Get all goals
   getAll: async () => {
     const response = await fetch(`${API_BASE_URL}/goals`, {
       headers: getHeaders(),
     });
-
     return handleResponse(response);
   },
 
-  updateProgress: async (goalId, progressData) => {
-    const response = await fetch(
-      `${API_BASE_URL}/goals/${goalId}/progress`,
-      {
-        method: "PUT",
-        headers: getHeaders(),
-        body: JSON.stringify(progressData),
-      }
-    );
+  // Update goal details (title, description, category, targetAmount)
+  update: async (goalId, updatedData) => {
+    const response = await fetch(`${API_BASE_URL}/goals/${goalId}`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify(updatedData),
+    });
+    return handleResponse(response);
+  },
 
+  // Delete a goal
+  delete: async (goalId) => {
+    const response = await fetch(`${API_BASE_URL}/goals/${goalId}`, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  // Update goal progress
+  updateProgress: async (goalId, progressData) => {
+    const response = await fetch(`${API_BASE_URL}/goals/${goalId}/progress`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify(progressData),
+    });
+    return handleResponse(response);
+  },
+
+  // Get dashboard summary for goals
+  getSummary: async () => {
+    const response = await fetch(`${API_BASE_URL}/goals/summary`, {
+      headers: getHeaders(),
+    });
     return handleResponse(response);
   },
 };
+
+ 
+
+  
 
 /* =========================================
    DASHBOARD API
@@ -177,62 +224,13 @@ export const dashboardAPI = {
    ANALYTICS API
 ========================================= */
 
+
+
 export const analyticsAPI = {
   get: async () => {
     const response = await fetch(`${API_BASE_URL}/analytics`, {
       headers: getHeaders(),
     });
-
-    return handleResponse(response);
-  },
-};
-
-/* =========================================
-   ACTIVITY API
-   (Matches Your Backend Exactly)
-========================================= */
-
-export const activityAPI = {
-  add: async (activityData) => {
-    const response = await fetch(`${API_BASE_URL}/activity/add`, {
-      method: "POST",
-      headers: getHeaders(),
-      body: JSON.stringify(activityData),
-    });
-
-    return handleResponse(response);
-  },
-
-  getAll: async () => {
-    const response = await fetch(`${API_BASE_URL}/activity`, {
-      headers: getHeaders(),
-    });
-
-    return handleResponse(response);
-  },
-
-  update: async (activityId, activityData) => {
-    const response = await fetch(
-      `${API_BASE_URL}/activity/update/${activityId}`,
-      {
-        method: "PUT",
-        headers: getHeaders(),
-        body: JSON.stringify(activityData),
-      }
-    );
-
-    return handleResponse(response);
-  },
-
-  delete: async (activityId) => {
-    const response = await fetch(
-      `${API_BASE_URL}/activity/delete/${activityId}`,
-      {
-        method: "DELETE",
-        headers: getHeaders(),
-      }
-    );
-
     return handleResponse(response);
   },
 };

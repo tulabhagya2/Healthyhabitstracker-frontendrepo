@@ -1,8 +1,10 @@
+
 @import "tailwindcss";
+/* ---------- Root theme variables ---------- */
 
 /* ---------- Root theme variables ---------- */
 :root {
-  --background: 0 0% 100%;
+  --background: 0 0% 200%;
   --foreground: 222.2 84% 4.9%;
   --card: 0 0% 100%;
   --card-foreground: 222.2 84% 4.9%;
@@ -35,9 +37,27 @@ body {
   color: hsl(var(--foreground));
   font-feature-settings: "rlig" 1, "calt" 1;
   font-family: 'Inter', sans-serif;
+
+  /* Smooth transitions for dark/light toggle */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 * {
   border-color: hsl(var(--border));
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* Cards, inputs, and buttons */
+.card {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border-radius: var(--radius);
+}
+
+input, select, textarea, button {
+  background-color: hsl(var(--input));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+  border-radius: var(--radius);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

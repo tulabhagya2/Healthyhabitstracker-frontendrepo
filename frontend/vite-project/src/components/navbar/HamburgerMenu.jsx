@@ -20,36 +20,44 @@ export function HamburgerMenu({ user }) {
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/habits', label: 'Habits' },
     { to: '/goals', label: 'Goals' },
-    { to: '/activities', label: 'Activities' },
+    
     { to: '/analytics', label: 'Analytics' },
   ];
 
   return (
     <>
+      {/* Hamburger Icon */}
       <Button
         variant="ghost"
         size="icon"
-        className="md:hidden"
+        className="md:hidden text-white"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle menu"
       >
         {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </Button>
 
+      {/* Overlay Menu */}
       {isOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-background border-b md:hidden z-50">
-          <nav className="flex flex-col p-4 space-y-2">
+        <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-blue-600 to-indigo-600 text-white shadow-lg z-50 md:hidden">
+          <nav className="flex flex-col p-4 space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="px-4 py-2 hover:bg-accent rounded-md transition-colors"
+                className="px-4 py-2 hover:bg-blue-500 rounded-md transition-colors text-lg font-medium"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <Button variant="destructive" onClick={handleLogout} className="mt-4">
+
+            {/* Logout Button */}
+            <Button
+              variant="destructive"
+              onClick={handleLogout}
+              className="mt-4 w-full"
+            >
               Logout
             </Button>
           </nav>

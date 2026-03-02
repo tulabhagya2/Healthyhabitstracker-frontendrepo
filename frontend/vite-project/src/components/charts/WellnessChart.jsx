@@ -10,7 +10,7 @@ export function WellnessChart({ score }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setAnimatedScore(score);
-    }, 100);
+    }, 200); // smooth animation
     return () => clearTimeout(timer);
   }, [score]);
 
@@ -22,7 +22,6 @@ export function WellnessChart({ score }) {
             cx="100"
             cy="100"
             r={radius}
-            stroke="currentColor"
             strokeWidth="12"
             fill="none"
             className="text-gray-200 dark:text-gray-700"
@@ -31,12 +30,11 @@ export function WellnessChart({ score }) {
             cx="100"
             cy="100"
             r={radius}
-            stroke="currentColor"
             strokeWidth="12"
             fill="none"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
-            className={`${getWellnessScoreColor(score)} transition-all duration-1000 ease-out`}
+            className={`transition-all duration-1000 ease-out ${getWellnessScoreColor(score)}`}
             strokeLinecap="round"
           />
         </svg>
@@ -44,14 +42,14 @@ export function WellnessChart({ score }) {
           <span className={`text-4xl font-bold ${getWellnessScoreColor(score)}`}>
             {Math.round(animatedScore)}
           </span>
-          <span className="text-sm text-muted-foreground">Score</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">Score</span>
         </div>
       </div>
       <div className="mt-4 text-center">
         <p className={`text-lg font-semibold ${getWellnessScoreColor(score)}`}>
           {getWellnessScoreLabel(score)}
         </p>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
           Keep up the great work!
         </p>
       </div>
