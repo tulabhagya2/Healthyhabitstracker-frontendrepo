@@ -25,6 +25,17 @@ export function Dashboard() {
     }
   };
 
+  const summary = dashboardData?.summary || {
+    totalHabits: 0,
+    dailyCompletions: 0,
+    weeklyCompletions: 0,
+    longestStreak: 0,
+    completionRate: 0,
+    wellnessScore: 0,
+    activeGoals: 0,
+    averageGoalProgress: 0,
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
@@ -33,75 +44,95 @@ export function Dashboard() {
     );
   }
 
-  const summary = dashboardData?.summary || {
-    total_habits: 0,
-    daily_completions: 0,
-    weekly_completions: 0,
-    longest_streak: 0,
-    wellness_score: 0,
-  };
-
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Welcome back! Here&apos;s your progress overview.</p>
+        <p className="text-muted-foreground mt-1">
+          Welcome back! Here's your progress overview.
+        </p>
       </div>
 
+      {/* Summary Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <DashboardSummaryCard
           title="Total Habits"
-          value={summary.total_habits}
+          value={summary.totalHabits}
           icon={Target}
           description="Active habit trackers"
         />
         <DashboardSummaryCard
           title="Daily Completions"
-          value={summary.daily_completions}
+          value={summary.dailyCompletions}
           icon={TrendingUp}
           description="Completed today"
         />
         <DashboardSummaryCard
           title="Weekly Completions"
-          value={summary.weekly_completions}
+          value={summary.weeklyCompletions}
           icon={Flame}
           description="This week's progress"
         />
         <DashboardSummaryCard
           title="Longest Streak"
-          value={`${summary.longest_streak} days`}
+          value={`${summary.longestStreak} days`}
           icon={Award}
           description="Keep it up!"
         />
       </div>
 
+      {/* Charts + Quick Stats */}
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
-          <WellnessChart score={summary.wellness_score || 0} />
+          <WellnessChart score={summary.wellnessScore || 0} />
         </Card>
+
         <Card className="p-6">
           <h3 className="text-xl font-semibold mb-4">Quick Stats</h3>
           <div className="space-y-4">
+
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Completion Rate</span>
               <span className="font-semibold">
-                {summary.total_habits > 0
-                  ? Math.round((summary.daily_completions / summary.total_habits) * 100)
-                  : 0}%
+                {summary.completionRate}%
               </span>
             </div>
+
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Active Habits</span>
-              <span className="font-semibold">{summary.total_habits}</span>
+              <span className="font-semibold">
+                {summary.totalHabits}
+              </span>
             </div>
+
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Best Streak</span>
-              <span className="font-semibold">{summary.longest_streak} days</span>
+              <span className="font-semibold">
+                {summary.longestStreak} days
+              </span>
             </div>
+
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground">This Week</span>
-              <span className="font-semibold">{summary.weekly_completions} completions</span>
+              <span className="font-semibold">
+                {summary.weeklyCompletions} completions
+              </span>
             </div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">Active Goals</span>
+              <span className="font-semibold">
+                {summary.activeGoals}
+              </span>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground">Average Goal Progress</span>
+              <span className="font-semibold">
+                {summary.averageGoalProgress}%
+              </span>
+            </div>
+
           </div>
         </Card>
       </div>
