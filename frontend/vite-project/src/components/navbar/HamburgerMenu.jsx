@@ -1,7 +1,7 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 import { authAPI } from '../../services/api';
 import { toast } from 'react-toastify';
 
@@ -19,7 +19,7 @@ export function HamburgerMenu({ user }) {
   const navLinks = [
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/habits', label: 'Habits' },
-    { to: '/goals', label: 'Goals' },
+    
     
     { to: '/analytics', label: 'Analytics' },
   ];
