@@ -1,7 +1,7 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { authAPI } from '../../services/api';
 import { toast } from 'react-toastify';
 
@@ -21,7 +21,7 @@ export function HamburgerMenu({ user }) {
     { to: '/habits', label: 'Habits' },
     
     
-    { to: '/goals', label: 'Goals' },
+    { to: '/goals', label: 'Goals' }
   ];
 
   return (
