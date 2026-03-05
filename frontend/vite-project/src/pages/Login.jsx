@@ -3,7 +3,7 @@ import { Activity } from 'lucide-react';
 import { LoginForm } from '../components/forms/LoginForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
 
-export function Login() {
+ export function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
       <Card className="w-full max-w-md">
@@ -27,3 +27,5 @@ export function Login() {
     </div>
   );
 }
+
+

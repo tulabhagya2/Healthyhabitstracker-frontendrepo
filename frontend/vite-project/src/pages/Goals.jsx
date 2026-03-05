@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { goalAPI } from '../services/api';
 import { toast } from 'react-toastify';
 
-export function Goals() {
+ export function Goals() {
   const [goals, setGoals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -134,3 +134,4 @@ export function Goals() {
     </div>
   );
 }
+

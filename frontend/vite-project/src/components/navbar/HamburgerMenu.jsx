@@ -21,7 +21,7 @@ export function HamburgerMenu({ user }) {
     { to: '/habits', label: 'Habits' },
     
     
-    { to: '/analytics', label: 'Analytics' },
+    { to: '/goals', label: 'Goals' },
   ];
 
   return (

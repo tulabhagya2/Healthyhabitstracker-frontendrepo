@@ -1,8 +1,7 @@
 import { Flame, CheckCircle, Edit, Trash } from "lucide-react";
 import { motion } from "framer-motion";
-// ✅ Fixed relative imports based on your folder structure
-import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/Card";
+import { Button } from "../ui/Button";
 
 const categoryColors = {
   Fitness: "bg-blue-500",
@@ -18,32 +17,21 @@ const quotes = {
   Sleep: "Rest is productivity 😴",
 };
 
-export default function HabitCard({
-  habit,
-  onEdit,
-  onDelete,
-  onComplete,
-}) {
+export default function HabitCard({ habit, onEdit, onDelete, onComplete }) {
   const isCompletedToday =
     habit.last_completed_date &&
     new Date(habit.last_completed_date).toDateString() ===
       new Date().toDateString();
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      transition={{ duration: 0.2 }}
-    >
+    <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>
       <Card className="rounded-2xl shadow-lg border-l-4 border-green-500 bg-white">
         <CardContent className="p-6 space-y-4">
-
           {/* Title + Category */}
           <div className="flex justify-between items-start">
             <div>
               <h2 className="text-lg font-semibold">{habit.title}</h2>
-              <p className="text-sm text-gray-500">
-                {habit.description}
-              </p>
+              <p className="text-sm text-gray-500">{habit.description}</p>
               <p className="text-xs italic text-blue-600 mt-1">
                 {quotes[habit.category]}
               </p>

@@ -1,18 +1,23 @@
-
 import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
-import { HabitCard } from '../components/cards/HabitCard';
+import HabitCard from '../components/cards/HabitCard';
 import { HabitForm } from '../components/forms/HabitForm';
 import { Button } from '../components/ui/Button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '../components/ui/Dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger
+} from '../components/ui/Dialog';
 import { habitAPI } from '../services/api';
 import { toast } from 'react-toastify';
-
-export function Habits() {
+ export function Habits() {
   const [habits, setHabits] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedHabit, setSelectedHabit] = useState(null); // for updating habit
+  const [selectedHabit, setSelectedHabit] = useState(null);
 
   useEffect(() => {
     fetchHabits();
@@ -49,8 +54,8 @@ export function Habits() {
     }
   };
 
-  const handleUpdate = (habit) => {
-    setSelectedHabit(habit); // set habit data
+  const handleEdit = (habit) => {
+    setSelectedHabit(habit);
     setIsDialogOpen(true);
   };
 
@@ -95,7 +100,7 @@ export function Habits() {
             </DialogHeader>
 
             <HabitForm
-              habit={selectedHabit} // pass habit for pre-filled form
+              habit={selectedHabit}
               onSuccess={handleSuccess}
               onCancel={() => { setIsDialogOpen(false); setSelectedHabit(null); }}
             />
@@ -113,9 +118,9 @@ export function Habits() {
             <HabitCard
               key={habit.id}
               habit={habit}
-              onComplete={handleComplete}
-              onDelete={handleDelete}
-              onUpdate={handleUpdate}
+              onComplete={() => handleComplete(habit.id)}
+              onDelete={() => handleDelete(habit.id)}
+              onEdit={() => handleEdit(habit)}
             />
           ))}
         </div>
@@ -123,3 +128,4 @@ export function Habits() {
     </div>
   );
 }
+
